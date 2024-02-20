@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const Admin = require('./models/adminModel');
 const adminMockData = require('./mockData/adminMockData');
 
-const authAdminRoute = require('./routes/authAdmin');
+const authAdminRoute = require('./routes/adminAuth');
 const projectRoute = require('./routes/project');
 
 // Load environment variables from .env file

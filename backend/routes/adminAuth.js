@@ -1,3 +1,11 @@
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const Admin = require('../models/adminModel');
+const verifyRefreshTokenAdmin = require('../middleware/verifyTokenAdmin');
+
 router.post('/login', async (req, res) => {
     // check username exists
     const admin = await Admin.findOne({ username: req.body.username });
@@ -24,13 +32,16 @@ async function generateRefreshToken(adminId, refreshToken) {
 
 }
 
-const _id = req.user._id;
-const token = jwt.sign({ _id: _id }, process.env.TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME });
-const refresh_token = jwt.sign({ _id: _id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME });
+router.post('/token', verifyRefreshTokenAdmin, async (req, res) => {
+    const _id = req.user._id;
+    const token = jwt.sign({ _id: _id }, process.env.TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME });
+    const refresh_token = jwt.sign({ _id: _id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME });
 
-generateRefreshToken (_id, refresh_token)
+    generateRefreshToken (_id, refresh_token)
 
-return res.json({ token, refresh_token });
+    return res.json({ token, refresh_token });
+});
+
 
 //.................................
 //.................................
