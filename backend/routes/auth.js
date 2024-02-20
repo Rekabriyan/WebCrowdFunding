@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/user');
+const User = require('../models/userModel');
 const RefreshToken = require('../models/refreshToken');
 
-const { verifyToken, verifyRefreshToken } = require('../middleware/verifyToken');
+const { verifyRefreshToken, verifyToken } = require('../middleware/verifyToken');
 
 router.post('/register', async (req, res) => {
     try{
@@ -36,20 +36,20 @@ router.post('/login', async (req, res) => {
 
     // create token
     const resfesh_token = jwt.sign({_id: user._id}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME});
-    generateREfreshToken(user.id, resfesh_token);
+    generateRefreshToken(user.id, resfesh_token);
     return res.json({user, token, refresh_token});
 
 });
 
-async function generateREfreshToken(userId, refreshToken){
+// async function generateRefreshToken(userId, refreshToken){
 
-}
+// }
 
 router.post('/token', verifyRefreshToken, async (req, res) => {
     const _id = req.user._id;
     const token = await jwt.sign({_id}, process.env.TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME});
     const refresh_token  = await jwt.sign({_id}, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.JWT_REFRESH_TIME});
-    generateREfreshToken(_id, refresh_token);
+    generateRefreshToken(_id, refresh_token);
 
     return res.json({token, refresh_token});
 });
@@ -57,10 +57,10 @@ router.post('/token', verifyRefreshToken, async (req, res) => {
 router.delete('/logout', verifyToken, async (req, res) => {
     try {
         res.clearCookie("jwt");
-        const removeRefreshToken = awaitRefreshToken.deleteOne({ token: req.body.token});
+        const removeRefreshToken = await RefreshToken.deleteOne({ token: req.body.token});
         res.status(200).send({ status: 1, message: 'Logout Successfully'});
     } catch (err) {
-        res.status(400).json({ status: 0, message: 'err'});
+        res.status(400).json({ status: 0, message: err});
     }
 });
 

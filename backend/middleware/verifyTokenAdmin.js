@@ -16,7 +16,7 @@ function verifyTokenAdmin(req, res, next){
 }
 
 async function verifyRefreshTokenAdmin (req, res, next){
-    const refreshToken = req.header('refresh-token');
+    const token = req.header('refresh-token');
     //.............................
     try {
         const verified = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET_ADMIN);
@@ -30,4 +30,7 @@ async function verifyRefreshTokenAdmin (req, res, next){
     }
 }
 
-module.exports = { verifyTokenAdmin, verifyRefreshTokenAdmin };
+module.exports = { 
+    verifyTokenAdmin, 
+    verifyRefreshTokenAdmin 
+};

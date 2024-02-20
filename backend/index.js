@@ -41,10 +41,10 @@ mongoose.connect('mongodb://localhost:27017/crowdfunding-app',
     useUnifiedTopology: true, 
 });
 
-const connection = mongoose.connextion;
+const connection = mongoose.connection;
 connection.once('open', async () => {
     console.log('Connected to MongoDB');
-    const adminCount = await Admin.estimatedDocumentCount();
+    const adminCount = await Admin.countDocuments();
     if (adminCount === 0) {
         try {
             // Add mock admin data to the database

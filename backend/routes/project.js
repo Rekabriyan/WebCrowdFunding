@@ -7,7 +7,7 @@ const fs = require('fs');
 const Project = require('../models/projectModel');
 const Donation = require('../models/donationModel');
 
-const { verifyTokenAdmin } = require('../middleware/verifyToken');
+const { verifyTokenAdmin } = require('../middleware/verifyTokenAdmin');
 
 // Konfigurasi penyimpanan untuk multer
 const storage = multer.diskStorage({

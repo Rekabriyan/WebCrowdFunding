@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const Admin = require('../models/adminModel');
-const verifyRefreshTokenAdmin = require('../middleware/verifyTokenAdmin');
+const RefreshTokenAdmin = require('../models/refreshTokenAdmin');
+
+const { verifyTokenAdmin, verifyRefreshTokenAdmin } = require('../middleware/verifyTokenAdmin');
 
 router.post('/login', async (req, res) => {
     // check username exists
@@ -46,7 +48,7 @@ router.post('/token', verifyRefreshTokenAdmin, async (req, res) => {
 //.................................
 //.................................
 
-route.delete('/logout', verifyTokenAdmin, async (req, res) => {
+router.delete('/logout', verifyTokenAdmin, async (req, res) => {
     try {
         res.clearCookie("jwt");
         const removeRefreshToken = await RefreshTokenAdmin.deleteOne({ token: req.body.token });

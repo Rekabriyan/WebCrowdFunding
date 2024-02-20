@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-const RefreshTokenAdmin = require('../models/refreshTokenAdmin');
+const RefreshToken = require('../models/refreshToken');
 
-function verifyTokenAdmin(req, res, next){
+function verifyToken(req, res, next){
     const token = req.header('auth-token');
     //.............................
     try {
@@ -14,7 +14,7 @@ function verifyTokenAdmin(req, res, next){
     }
 }
 
-async function verifyRefreshTokenAdmin (req, res, next){
+async function verifyRefreshToken (req, res, next){
     const token = req.body.token;
     //.............................
     try {
@@ -29,4 +29,7 @@ async function verifyRefreshTokenAdmin (req, res, next){
     }
 }
 
-module.exports = { verifyTokenAdmin, verifyRefreshTokenAdmin };
+module.exports = { 
+    verifyToken, 
+    verifyRefreshToken 
+};
