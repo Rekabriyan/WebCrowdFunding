@@ -63,7 +63,7 @@ connection.once('open', async () => {
 app.use('/admin/', authAdminRoute);
 app.use('/user/', authRoute);
 app.use('/project/', projectRoute);
-app.user('/donation/', donationRoute);
+app.use('/donation/', donationRoute);
 
 //Static Folder
 app.use(express.static('uploads'))
