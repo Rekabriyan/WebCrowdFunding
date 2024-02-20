@@ -8,6 +8,7 @@ const Admin = require('./models/adminModel');
 const adminMockData = require('./mockData/adminMockData');
 
 const authAdminRoute = require('./routes/adminAuth');
+const authRoute = require('./routes/auth');
 const projectRoute = require('./routes/project');
 
 // Load environment variables from .env file
@@ -62,8 +63,8 @@ connection.once('open', async () => {
 //Routes API
 app.use('/admin/', authAdminRoute);
 app.use('/user/', authRoute);
-app.use('/project/', projectRoute);
-app.use('/donation/', donationRoute);
+// app.use('/project/', projectRoute);
+// app.use('/donation/', donationRoute);
 
 //Static Folder
 app.use(express.static('uploads'))
